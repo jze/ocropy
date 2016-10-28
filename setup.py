@@ -10,22 +10,22 @@ from distutils.core import setup #, Extension, Command
 
 if not os.path.exists("models/en-default.pyrnn.gz"):
     print
-    print "You must download the default model 'en-default.pyrnn.gz'"
+    print "You should download the default model 'en-default.pyrnn.gz'"
     print "and put it into ./models."
     print
     print "Check https://github.com/tmbdev/ocropy for the location"
     print "of model files."
     print
-    sys.exit(1)
 
+models = [c for c in glob.glob("models/*pyrnn.gz")]
 scripts = [c for c in glob.glob("ocropus-*") if "." not in c and "~" not in c]
 
 setup(
     name = 'ocropy',
-    version = 'v0.2',
+    version = 'v1.0',
     author = "Thomas Breuel",
     description = "The OCRopy RNN-based Text Line Recognizer",
     packages = ["ocrolib"],
-    data_files= [('share/ocropus', ["models/en-default.pyrnn.gz"])],
+    data_files= [('share/ocropus', models)],
     scripts = scripts,
     )
