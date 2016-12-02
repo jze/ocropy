@@ -35,9 +35,7 @@ Alternatively, dependencies can be installed into a [Python Virtual Environment]
 
     $ virtualenv ocropus_venv/
     $ source ocropus_venv/bin/activate
-    $ pip install -r requirements_1.txt
-    # tables has some dependencies which must be installed first:
-    $ pip install -r requirements_2.txt
+    $ pip install -r requirements.txt
     $ wget -nd http://www.tmbdev.net/en-default.pyrnn.gz
     $ mv en-default.pyrnn.gz models/
 
@@ -120,7 +118,7 @@ formats are different and because the text line normalization is slightly
 different. Error rates are about the same.
 
 In addition, the C++ command line tool (`clstmctc`) has different command line 
-options and currently requiresloading training data into HDF5 files, instead
+options and currently requires loading training data into HDF5 files, instead
 of being trained off a list of image files directly (image file-based training
 will be added to `clstmctc` soon).
 
