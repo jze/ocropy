@@ -5,7 +5,7 @@ import random as pyrandom
 import glob,sys,os,re,codecs,traceback
 from pylab import *
 from PIL import Image
-import ImageFont,ImageDraw
+from PIL import ImageFont,ImageDraw
 from scipy.ndimage import filters,measurements,interpolation
 from scipy.misc import imsave
 import ocrolib
@@ -118,8 +118,6 @@ def rgeometry(image,eps=0.03,delta=0.3):
     c = array([w/2.0,h/2])
     d = c-dot(m,c)+array([randn()*delta,randn()*delta])
     return interpolation.affine_transform(image,m,offset=d,order=1,mode='constant',cval=image[0,0])
-
-from scipy.ndimage import interpolation,filters
 
 def rdistort(image,distort=3.0,dsigma=10.0,cval=0):
     h,w = image.shape

@@ -36,6 +36,8 @@ parser.add_argument('--llocs',action="store_true",
                     help="output LSTM locations for characters")
 parser.add_argument('--alocs',action="store_true",
                     help="output aligned LSTM locations for characters")
+parser.add_argument('--probabilities',action="store_true",
+                    help="output probabilities for each letter")
 
 # error measures
 parser.add_argument("-r","--estrate",action="store_true",
@@ -96,7 +98,7 @@ print_info("")
 
 
 inputs = ocrolib.glob_all(args.files)
-if not args.quiet: print_info("#inputs"+ str(len(inputs)))
+if not args.quiet: print_info("#inputs: %d" % (len(inputs)))
 
 # disable parallelism when anything is being displayed
 
@@ -140,7 +142,7 @@ def process1(arg):
     if not args.nocheck:
         check = check_line(amax(line)-line)
         if check is not None:
-            print_error(fname+" SKIPPED "+check+" (use -n to disable this check)")
+            print_error("%s SKIPPED %s (use -n to disable this check)" % (fname, check))
             return (0,[],0,trial,fname)
 
     if not args.nolineest:
@@ -182,6 +184,14 @@ def process1(arg):
                     r = (r-args.pad)*scale
                     locs.write("%s\t%.1f\n"%(c,r))
 
+    if args.probabilities:
+        # output character probabilities
+        result = lstm.translate_back(network.outputs,pos=2)
+        with codecs.open(base+".prob","w","utf-8") as file:
+            for c,p in result:
+                c = network.l2s([c])
+                file.write("%s\t%s\n"%(c,p))
+
     if not args.nonormalize:
         pred = ocrolib.normalize_text(pred)
 
@@ -198,7 +208,7 @@ def process1(arg):
             err = edist.xlevenshtein(pred0,gt0)
             conf = []
         if not args.quiet:
-            print_info("%3d %3d"%(err,len(gt)) + " " + fname+":"+pred)
+            print_info("%3d %3d %s:%s" % (err, len(gt), fname, pred))
             sys.stdout.flush()
         return (err,conf,len(gt0),trial,fname)
 
@@ -286,8 +296,9 @@ if args.estrate:
         terr += err
         total += n
         confusions += conf
-    print_info("%.5f"%(terr*1.0/total) + " " + terr+ " " + total + " " + args.model)
+    print_info("%.5f %d %d %s" % (terr*1.0/total, terr, total, args.model))
     if args.estconf>0:
-        print_info("top " + args.estconf + " confusions (count pred gt), comparison: " + args.compare)
+        print_info("top %d confusions (count pred gt), comparison: %s" % (
+            args.estconf, args.compare))
         for ((u,v),n) in Counter(confusions).most_common(args.estconf):
-            print_info("%6d %-4s %-4s"%(n,u,v))
+            print_info("%6d %-4s %-4s" % (n, u ,v))
