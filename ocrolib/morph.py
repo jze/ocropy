@@ -4,6 +4,7 @@
 
 from numpy import *
 import pylab
+from pylab import *
 from scipy.ndimage import morphology,measurements,filters
 from scipy.ndimage.morphology import *
 from toplevel import *
@@ -18,8 +19,8 @@ def label(image,**kw):
     except: pass
     types = ["int32","uint32","int64","unit64","int16","uint16"]
     for t in types:
-	try: return measurements.label(array(image,dtype=t),**kw) 
-	except: pass
+        try: return measurements.label(array(image,dtype=t),**kw)
+        except: pass
     # let it raise the same exception as before
     return measurements.label(image,**kw)
 
@@ -33,8 +34,8 @@ def find_objects(image,**kw):
     except: pass
     types = ["int32","uint32","int64","unit64","int16","uint16"]
     for t in types:
-	try: return measurements.find_objects(array(image,dtype=t),**kw) 
-	except: pass
+        try: return measurements.find_objects(array(image,dtype=t),**kw)
+        except: pass
     # let it raise the same exception as before
     return measurements.find_objects(image,**kw)
     
@@ -221,8 +222,6 @@ def all_neighbors(image):
 ################################################################
 ### Iterate through the regions of a color image.
 ################################################################
-
-from pylab import *
 
 @checks(SEGMENTATION)
 def renumber_labels_ordered(a,correspondence=0):
