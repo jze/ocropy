@@ -225,9 +225,20 @@ def compute_colseps(binary,scale):
         #colseps = compute_colseps_morph(binary,scale)
         colseps = maximum(colseps,seps)
         binary = minimum(binary,1-seps)
+    DSAVE("all_seps",colseps)
+    colseps = apply_mask(colseps)
+    DSAVE("masked_seps", colseps)
     return colseps,binary
 
-
+def apply_mask(colseps):
+    try:
+        mask = ocrolib.read_image_binary(base+".mask.png")
+    except IOError:
+        return colseps
+    masked_seps = maximum(colseps,mask)
+    print_info("applied mask %s.mask.png" % base )
+    return masked_seps
+
 
 ################################################################
 ### Text Line Finding.
