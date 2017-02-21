@@ -5,7 +5,7 @@
 # ground truth text.
 	
 DIFFS=`mktemp`
-ocropus-errs testing/${1}*.gt.txt training/${1}*.gt.txt 2>/dev/null |grep -v "^ 0" | grep gt.txt| cut -b 15- | sed 's/.gt.txt//' > $DIFFS
+ocropus-errs testing/${1}*.gt.txt training/${1}*.gt.txt 2>/dev/null |grep -v "^     0" | grep gt.txt| cut -b 15- | sed 's/.gt.txt//' > $DIFFS
 	
 # copy ground truth text to make it accessable for ocropus-gtedit
 cat $DIFFS | while read f; do cp $f.gt.txt $f.txt; done
