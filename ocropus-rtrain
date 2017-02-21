@@ -158,7 +158,7 @@ def save_lstm(fname,network):
         network.lstm.save(fname)
     else:
         if args.strip:
-            print 'saving stripped network (without temporary variables)...'
+            print('saving stripped network (without temporary variables)...')
             network.clear_log(deallocate_tempvars=True)
             for x in network.walk(): x.preSave()
         ocrolib.save_object(fname,network)
