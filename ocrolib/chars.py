@@ -36,19 +36,13 @@ european = default+turkish+greek
 
 replacements = [
     (u'[_~#]',u"~"), # OCR control characters
-    (u'"',u"''"), # typewriter double quote
     (u"`",u"'"), # grave accent
-    (u'[“”]',u"''"), # fancy quotes
     (u"´",u"'"), # acute accent
-    (u"[‘’]",u"'"), # left single quotation mark
-    (u"[“”]",u"''"), # right double quotation mark
-    (u"“",u"''"), # German quotes
-    (u"„",u",,"), # German quotes
     (u"…",u"..."), # ellipsis
     (u"′",u"'"), # prime
     (u"″",u"''"), # double prime
     (u"‴",u"'''"), # triple prime
-    (u"〃",u"''"), # ditto mark
+    (u"〃",u"\""), # ditto mark
     (u"µ",u"μ"), # replace micro unit with greek character
     (u"[–—]",u"-"), # variant length hyphens
     (u"ﬂ",u"fl"), # expand Unicode ligatures
