@@ -3,7 +3,7 @@ MODEL=$1
 DIR=$2
 
 if [ ! -e "$MODEL" ]; then
-	echo "USAGE: ocropus-genauigkeit.sh <MODEL-FILE>"
+	echo "USAGE: ocropus-precision.sh <MODEL-FILE>"
 	exit 1
 fi
 
@@ -21,7 +21,7 @@ TEMP=`mktemp -d`
 cp $DIR/*.png $TEMP
 cp $DIR/*.gt.txt $TEMP
 
-ocropus-rpred -q -Q6 -m $MODEL $TEMP/*.png
+ocropus-rpred -q -Q6 -n -m $MODEL $TEMP/*.png
 ocropus-econf $TEMP/*.gt.txt 
 ocropus-errs -e $TEMP/*.gt.txt 
 
