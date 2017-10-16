@@ -14,7 +14,12 @@ fi
 /usr/bin/find . -name "*.gt.txt" | while read t; do 
 	PNG="`echo "$t" | sed 's/.gt.txt/.bin.png/'`"
 	NRM="`echo "$t" | sed 's/.gt.txt/.nrm.png/'`"
-	MD5=`md5sum "$PNG" |  cut -c 1-32`
+	
+	if [ -e $NRM ] ; then 
+		MD5=`md5sum "$NRM" |  cut -c 1-32`
+	else
+		MD5=`md5sum "$PNG" |  cut -c 1-32`
+	fi
 	
 	mv $t ${1}_${MD5}.gt.txt
 	mv $PNG ${1}_${MD5}.bin.png
